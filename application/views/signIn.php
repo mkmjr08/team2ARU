@@ -43,7 +43,7 @@
       </select>
 			<input type="email" class="inputs" placeholder="Email" name="email" required style="color: black;" />
 			<input type="password" class="inputs" placeholder="Password" name="password" required style="color: black;" />
-			<a href="#">Forgot your password?</a>
+			<!--<a href="<?php echo base_url(); ?>clientPasswordIndex">Forgot your password?</a> -->
       <?php  if ($this->session->flashdata('error')) { ?>
     <div ><?php echo $this->session->flashdata('error'); ?></div>
 <?php } ?>

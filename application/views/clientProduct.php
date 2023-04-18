@@ -67,7 +67,7 @@ input[type=submit] {
                     <th>#</th>
                     <th>Product Type</th>
                     <th># of ideas Associated</th>
-                    <th style="text-align: center;">View Products</th>
+                    <th style="text-align: center;">View Related Ideas</th>
                     <th style="text-align: center;">Add</th>
                 </tr> 
             <?php

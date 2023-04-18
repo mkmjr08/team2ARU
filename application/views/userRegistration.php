@@ -97,11 +97,11 @@ a {
         </tr>
         <tr>
             <td><label for="email">Email:</label></td>
-            <td><input type="text" name="email" id="email" placeholder="Your email" required></td>
+            <td><input type="text" name="email" id="email" placeholder="Your email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"></td>
         </tr>
  	    <tr>
             <td><label for="phoneNumber">Phone Number:</label></td>
-            <td><input type="text" name="phoneNumber" id="phoneNumber" placeholder="Your Phone number" required></td>
+            <td><input type="text" name="phoneNumber" id="phoneNumber" placeholder="Your Phone number" required pattern="[0-9]{10,12}"></td>
         </tr>      
         <tr>
             <td><label for="add"> Address:</label></td>
@@ -113,15 +113,15 @@ a {
         </tr>    
 	    <tr>
             <td><label for="password">Password:</label></td>
-            <td><input type="password" name="password" id="password" placeholder="Your Password" required></td>
+            <td><input type="password" name="password" id="password" placeholder="Your Password" required minlength="8"></td>
         </tr> 
         <tr>
             <td><label for="cpassword">Confirm Password:</label></td>
-            <td><input type="password" name="cpassword" id="cpassword" placeholder="Confirm Your Password" required></td>
+            <td><input type="password" name="cpassword" id="cpassword" placeholder="Confirm Your Password" required minlength="8"></td>
         </tr>
         <tr>
             <td><label for="security question">Security Question:</label></td>
-            <td>
+            <td required>
 	        <select name="seq" id="seq" style="width: 100%;padding: 15px;margin: 5px 0 22px 0;display: inline-block;border: none;background: #f1f1f1;" required>
             <option disabled selected value>--select--</option>
             <?php
@@ -145,12 +145,12 @@ a {
     </table>
 
     <div style="padding-left: 30%;">
-    <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+    <p>By creating an account you agree to our <a href="<?php echo base_url(); ?>privacyPolicies">Terms & Privacy</a>.</p>
     <div style="padding-left: 15%;">
     <?php  if ($this->session->flashdata('error')) { ?>
     <div ><?php echo $this->session->flashdata('error'); ?></div>
 <?php } ?>
-    <button type="submit" name="btnRegister" class="btnRegister" onclick="validateEmail(document.form1.email)">Register</button>
+    <button type="submit" name="btnRegister" class="btnRegister">Register</button>
           </div>
           </div>
   </div>

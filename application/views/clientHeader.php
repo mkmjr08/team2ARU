@@ -148,6 +148,11 @@ if(!isset($_SESSION['Uid'])){
                 </li>
                 <li>
                         <span class="icon">
+                            <?php $this->load->helper('url'); echo anchor(base_url('ClientHomeController/'), 'Notifications');?>
+                        </span>
+                </li>
+                                <li>
+                        <span class="icon">
                             <?php $this->load->helper('url'); echo anchor(base_url('ClientHomeController/changepassword'), 'Edit Password');?>
                         </span>
                 </li>

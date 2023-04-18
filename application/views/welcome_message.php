@@ -28,7 +28,7 @@
             <li><a href="<?php echo base_url(); ?>userRegistration">Create Account</a></li>
         </ul>
         </li>
-        <li><a href="#aboutus">Abouts</a></li>
+        <li><a href="#aboutus">About Us</a></li>
         <li><a href="#contactus">Contact Us</a></li>
     </div>
 </ul>

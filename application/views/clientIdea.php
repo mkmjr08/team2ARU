@@ -77,7 +77,7 @@ input[type=submit] {
                 foreach ($query->result() as $row) 
                 {   
                     $temp = $row->idea_id;
-                    $sql1="SELECT * FROM tbl_investedidea where idea_id=$temp";
+                    $sql1="SELECT * FROM tbl_investedidea where idea_id=$temp AND user_id=$user_id";
                     $query1 = $this->db->query($sql1);
                     $row1=$query1->result();
                     if($row1==NULL){?>
@@ -88,7 +88,28 @@ input[type=submit] {
                 </tr>
                    <?php }
                 }
-                if($query->result()==NULL){
+                if($query->result()==NULL){ 
+                $status=0;
+                $this->db->select();
+                $this->db->from('tbl_chosenproducttype'); 
+                $this->db->where('user_id',$user_id);
+                $query3 = $this->db->get();
+                foreach ($query3->result() as $row3){
+                    $this->db->select();
+                    $this->db->from('tbl_idea'); 
+                    $this->db->where('pro_id',$row3->pro_id);
+                    $query4 = $this->db->get();
+                    if($query4->result()==NULL){
+                        $status=1; ?>
+                 
+                        <h1 align="center">NO IDEAS FOUND WITH YOUR PREFERENCES</h1>
+                     
+                    <?php
+
+                    }
+
+                }
+                if($status==0){
                 $this->db->select();
                 $this->db->from('tbl_idea');
                 $query2 = $this->db->get();
@@ -100,7 +121,8 @@ input[type=submit] {
                 </tr>
                 <?php }
                 }
-                     if($i==1){
+                }
+                     if($i==1 && $status!=1){
                         ?>
                  
                         <h1 align="center">NO RECORDS FOUND</h1>
