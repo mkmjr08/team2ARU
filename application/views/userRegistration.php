@@ -83,7 +83,7 @@ a {
     <table style="padding-left: 30%;">
         <tr>
             <td><label for="uname">Name:</label></td>
-            <td><input type="text" name="uname" id="uname" placeholder="Your name" required></td>
+            <td><input type="text" name="uname" id="uname" placeholder="Your name" pattern="[a-zA-Z ]+" required></td>
         </tr>
 	    <tr>
             <td><label for="gender">Gender:</label></td>

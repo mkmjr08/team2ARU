@@ -1,5 +1,5 @@
 <?php
-class changePasswordController extends CI_Controller {
+class clientChangePasswordController extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->database();
@@ -15,46 +15,33 @@ class changePasswordController extends CI_Controller {
             $this->load->view('passwordIndex');
         }
         else{
-            //checking if there is a same product type exist in db
-            $this->db->select();
-            $this->db->from('tbl_userInfo');
-            $query = $this->db->get();
-            foreach($query->result() as $row){
-                $dbPWD=$row->user_password;
-                $dbUser=$row->user_email;
-            }
             $cPwd=$this->input->post('currentPassword');
             $newPwd=$this->input->post('newPassword');
             $reNewPwd=$this->input->post('reNewPassword');
-            if(!password_verify($cPwd,$dbPWD)){
-                redirect('changePasswordController/missMatchMsg');
-            }
-            elseif($reNewPwd!=$newPwd){
-                redirect('changePasswordController/reEnterMatchMsg');
+            $this->load->model('ClientModel');
+            $status=$this->ClientModel->changePassword($cPwd,$newPwd,$reNewPwd);
+            if($status){
+                echo "<script>alert('Invest Interest Removed Sucessfully');</script>";
+                $this->load->view('clientInvestedIdea');
             }
             else{
-            $hashPWD=password_hash($reNewPwd,PASSWORD_DEFAULT);
-            $data = array(
-                'user_password' => $hashPWD
-            );
-            $this->db->where('user_email', $dbUser);
-            $this->db->update('tbl_userInfo', $data);
-            echo $row->user_email;
-            redirect('changePasswordController/SucessMsg');
+                echo "<script>alert('Already Removed Interest');</script>";
+                $this->load->view('clientInvestedIdea');
             }
         }
     }
+        
     public function SucessMsg(){
         echo "<script>alert('Password Updated Successfully');</script>";
-        $this->load->view('adminIndex');
+        $this->load->view('clientHomePage');
     }
     public function missMatchMsg(){
         echo "<script>alert('Check Current Password!');</script>";
-        $this->load->view('passwordIndex');
+        $this->load->view('ClientPasswordIndex');
     }
     public function reEnterMatchMsg(){
         echo "<script>alert('Check New Password!');</script>";
-        $this->load->view('passwordIndex');
+        $this->load->view('ClientPasswordIndex');
     }
 }
 ?>

@@ -133,8 +133,12 @@ button {
                     </td>
                 </tr>
                 <tr>
-                    <td style="border: 0px"></td>
+                    <th style="border: 0px">Like the Idea?</th>
                     <td align="center"><?php $this->load->helper('url'); echo anchor(base_url('clientIdeaController/#/'.$row->idea_id.''), 'Rate');?></td></td>
+                </tr>
+                <tr>
+                    <th style="border: 0px">No Longer Interested?</th>
+                    <td align="center"><?php $this->load->helper('url'); echo anchor(base_url('clientIdeaController/removeIdea/'.$row->idea_id.''), 'Click Here to Remove');?></td></td>
                 </tr>
             </table>
             <br><br><br><br>

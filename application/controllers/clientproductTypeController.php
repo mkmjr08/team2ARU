@@ -17,12 +17,36 @@ class clientproductTypeController extends CI_Controller {
         $this->load->view('clientViewIdeaDetails');
     }
     public function AddProductType($id){
-        $_SESSION['pro_id']=$id;
-        $this->load->view('clientAddProductType');
+        $user_id=$_SESSION['Uid'];
+        $data= array('pro_id'=>$id,
+                    'user_id'=>$user_id );
+        $this->load->model('ClientModel');
+        $status=$this->ClientModel->addProductType($data);
+        if($status){
+            echo "<script>alert('Preference Added Sucessfully');</script>";
+            $this->load->view('clientProduct');
+        }
+        else{
+            echo "<script>alert('Already Registered Preference');</script>";
+            $this->load->view('clientProduct');
+        }
     }
     public function RemoveProductType($id){
-        $_SESSION['pro_id']=$id;
-        $this->load->view('clientRemoveProductType');
+        $user_id=$_SESSION['Uid'];
+        $data= array(
+            'pro_id'=>$id,
+            'user_id'=>$user_id 
+        );
+        $this->load->model('ClientModel');
+        $status=$this->ClientModel->removeProductType($data);
+        if($status){
+            echo "<script>alert('Preference Removed Sucessfully');</script>";
+            $this->load->view('clientChosenProductType');
+        }
+        else{
+            echo "<script>alert('Already Removed Preference');</script>";
+            $this->load->view('clientChosenProductType');
+        }
     }
 } 
 ?>

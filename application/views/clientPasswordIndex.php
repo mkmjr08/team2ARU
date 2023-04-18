@@ -42,9 +42,28 @@ include("clientHeader.php");
             <?php  if ($this->session->flashdata('error2')) { ?>
                 <div ><?php echo $this->session->flashdata('error2'); ?></div>
             <?php } ?>
+             <div id="password-message" style="font-size: 10; padding-left:100px; padding-top: 40px;"></div> 
             <input type="submit" value="Change Password" name="changePWD">
         </form>
         </div>
     </div>
 </body>
 </html>
+<script>
+const newPasswordInput = document.getElementById('newPassword');
+const confirmPasswordInput = document.getElementById('reNewPassword');
+const passwordMessage = document.getElementById('password-message');
+
+confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+function checkPasswordMatch() {
+  const newPassword = newPasswordInput.value;
+  const confirmPassword = confirmPasswordInput.value;
+  if (newPassword === confirmPassword) {
+    passwordMessage.textContent = 'Passwords match!';
+    passwordMessage.style.color = 'green';
+  } else {
+    passwordMessage.textContent = 'Passwords do not match.';
+    passwordMessage.style.color = 'red';
+  }
+}
+</script>

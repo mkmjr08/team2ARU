@@ -108,9 +108,3 @@ input[type=submit] {
         </div>
 </body>
 </html>
-<?php
-if(isset($_POST['btn']))
-{
-    redirect("productTypeController/addNewProductType");
-}
-?>

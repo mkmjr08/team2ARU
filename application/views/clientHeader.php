@@ -128,12 +128,12 @@ if(!isset($_SESSION['Uid'])){
                 </li>
                 <li>
                         <span class="icon">
-                            <?php $this->load->helper('url'); echo anchor(base_url('ClientHomeController/Product_type'), 'Product Types');?>
+                            <?php $this->load->helper('url'); echo anchor(base_url('ClientHomeController/Product_type'), 'Add Preference');?>
                         </span>
                 </li>
                 <li>
                         <span class="icon">
-                            <?php $this->load->helper('url'); echo anchor(base_url('ClientHomeController/chosen_product_type'), 'Chosen Product Type');?>
+                            <?php $this->load->helper('url'); echo anchor(base_url('ClientHomeController/chosen_product_type'), 'My Preference');?>
                         </span>
                 </li>
                 <li>

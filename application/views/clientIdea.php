@@ -69,6 +69,7 @@ input[type=submit] {
                 </tr>
             <?php
                 $i=1; 
+                $status=0;
                 //"SELECT * FROM tbl_idea idea JOIN tbl_chosenproducttype product WHERE idea.pro_id=product.pro_id AND product.user_id=3";
                 //$sql = "SELECT * FROM tbl_idea WHERE NOT EXISTS (SELECT 1 FROM tbl_investedIdea WHERE tbl_investedIdea.idea_id = tbl_idea.idea_id)";
                 $user_id=$_SESSION['Uid'];
@@ -89,7 +90,6 @@ input[type=submit] {
                    <?php }
                 }
                 if($query->result()==NULL){ 
-                $status=0;
                 $this->db->select();
                 $this->db->from('tbl_chosenproducttype'); 
                 $this->db->where('user_id',$user_id);
