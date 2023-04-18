@@ -59,14 +59,13 @@ input[type=submit] {
     <div style="padding-top: 5%; padding-left: 14.6%; padding-right:0%; font-family: 'Open Sans', sans-serif; ">
             <h1>Ideas
             </h1><form action="<?php echo site_url('ideaController/addIdea'); ?>" method="post">
-            <input type="submit" name="btn" value="Add New Country"></form><br><br><br>
+            <input type="submit" name="btn" value="Add New Idea"></form><br><br><br>
             <table id="customers">
                 <tr>
                     <th>#</th>
                     <th style="text-align: center;">Idea</th>
                     <th style="text-align: center;">View More</th>
                     <th style="text-align: center;">Edit</th>
-                    <th style="text-align: center;">Delete</th>
                 </tr>
             <?php
                 $sql = "SELECT * FROM tbl_idea ORDER BY idea_exp_date ASC";
@@ -78,7 +77,6 @@ input[type=submit] {
                     <td style="text-align: center;"><?php echo strtoupper($row->idea_title); ?></td>
                     <td align="center"><?php $this->load->helper('url'); echo anchor(base_url('IdeaController/viewMore/'.$row->idea_id.''), 'View More');?></td>
                     <td align="center"><?php $this->load->helper('url'); echo anchor(base_url('IdeaController/edit/'.$row->idea_id.''), 'Edit');?></td>
-                    <td align="center"><?php $this->load->helper('url'); echo anchor(base_url('IdeaController/delete/'.$row->idea_id.''), 'Delete');?></td>
                 </tr>
                 <?php }
                      if($query->result()==null){

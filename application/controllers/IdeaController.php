@@ -5,17 +5,15 @@ class IdeaController extends CI_Controller {
         $this->load->database();
     }
     public function viewMore($id){
-        $_SESSION['ideaID']=$id;
-        $this->load->view('viewIdeaDetails');
+        $data= array(
+            'proID' =>$id
+        );
+        $this->load->view('viewIdeaDetails',$data);
     }
     public function edit($id){
         $_SESSION['ideaID']=$id;
         $this->load->view('editIdeaIndex');
     }
-    public function delete($id){
-        $this->load->view('adminIndex');
-    }
-
     //Adding
     public function addIdea(){
         $this->load->view('addIdeaIndex');
@@ -36,14 +34,6 @@ class IdeaController extends CI_Controller {
             $this->session->set_flashdata('error', 'Check Expire Date');
             $this->load->view('addIdeaIndex');
         }else {
-            //cheching the same idea type exist in db
-            $this->db->select();
-            $this->db->from('tbl_idea');
-            $this->db->where('idea_title',$this->input->post('idea'))->where('idea_owner',$this->input->post('owner'))->where('idea_exp_date',$this->input->post('expdate'));
-            $query = $this->db->get();
-            if($query->result()!=null){
-            redirect('ideaController/UnsucessMsg');
-            }
             // If form validation succeeds, save the data to the database
             $today=date('y/m/d');
             $data = array(
@@ -57,8 +47,14 @@ class IdeaController extends CI_Controller {
                 'idea_risk' => $this->input->post('risk'),
                 'co_id' => $this->input->post('country')
             );
-            $this->db->insert('tbl_idea', $data);
-            redirect('ideaController/sucessMsg');
+            $this->load->model('idea_model');
+            $status=$this->idea_model->save($data);
+            if($status){
+                redirect('ideaController/sucessMsg');
+                }
+            else{
+                redirect('ideaController/UnsucessMsg');
+                }
     }
     }
     public function sucessMsg(){
@@ -113,9 +109,14 @@ class IdeaController extends CI_Controller {
                 'idea_risk' => $this->input->post('risk'),
                 'co_id' => $this->input->post('country')
             );
-            $this->db->where('idea_id', $ideaID);
-            $this->db->update('tbl_idea', $data);
-            redirect('ideaController/editSucessMsg');
+            $this->load->model('idea_model');
+            $status=$this->idea_model->edit($data,$ideaID);
+            if($status){
+                redirect('ideaController/editSucessMsg');
+                }
+            else{
+                redirect('ideaController/editUnsucessMsg');
+                }
     }
     }
     public function editSucessMsg(){

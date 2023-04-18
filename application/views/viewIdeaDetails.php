@@ -62,7 +62,6 @@ button {
             </h1><br><br>
             <?php
             try{
-                $proID=$_SESSION['ideaID'];
                 $this->db->select();
                 $this->db->from('tbl_idea');
                 $this->db->where('idea_id',$proID);

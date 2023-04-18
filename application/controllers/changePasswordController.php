@@ -37,10 +37,14 @@ class changePasswordController extends CI_Controller {
             $data = array(
                 'admin_Password' => $hashPWD
             );
-            $this->db->where('admin_UserName', $dbUser);
-            $this->db->update('tbl_admincredentionals', $data);
-            echo $row->admin_UserName;
-            redirect('changePasswordController/SucessMsg');
+            $this->load->model('pwd_model');
+            $status=$this->pwd_model->changePassword($data,$dbUser);
+            if($status){
+                redirect('changePasswordController/SucessMsg');
+                }
+            else{
+                $this->load->view('passwordIndex');
+                }
             }
         }
     }

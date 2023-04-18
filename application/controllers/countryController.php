@@ -16,21 +16,16 @@ class countryController extends CI_Controller {
             $this->session->set_flashdata('error', 'Check Field Values');
             $this->load->view('addNewCountryIndex');
         } else {
-            //cheching the same product type exist in db
-            $this->db->select();
-            $this->db->from('tbl_country');
-            $this->db->where('co_name',$this->input->post('couName'));
-            $query = $this->db->get();
-            if($query->result()!=null){
-            redirect('countryController/UnsucessMsg');
+            $cName=$this->input->post('couName');
+            $cCurrency=$this->input->post('couCurrency');
+            $this->load->model('Country_model');
+            $status=$this->Country_model->saveData($cName, $cCurrency);
+            if($status){
+                redirect('countryController/sucessMsg');
             }
-            // If form validation succeeds, save the data to the database
-            $data = array(
-                'co_name' => $this->input->post('couName'),
-                'co_currency' => $this->input->post('couCurrency')
-            );
-            $this->db->insert('tbl_country', $data);
-            redirect('countryController/sucessMsg');
+            else{
+                redirect('countryController/UnsucessMsg');
+            }
     }
     }
     public function sucessMsg(){
@@ -46,8 +41,10 @@ class countryController extends CI_Controller {
 
     //editing 
     public function edit($id){
-        $_SESSION['counID']=$id;
-        $this->load->view('editCountryIndex');
+        $data= array(
+            'id' =>$id
+        );
+        $this->load->view('editCountryIndex',$data);
     }
     public function edit_form_data(){
         $this->load->library('form_validation');
@@ -59,22 +56,16 @@ class countryController extends CI_Controller {
             $this->load->view('editCountryIndex');
         } else {
             $coID=$this->input->post('id');
-            //checking if there is a same product type exist in db
-            $this->db->select();
-            $this->db->from('tbl_country');
-            $this->db->where('co_name',$this->input->post('couName'))->where('co_id!=',$coID);
-            $query = $this->db->get();
-            if($query->result()!=null){
+            $cName=$this->input->post('couName');
+            $cCurrency=$this->input->post('couCurrency');
+            $this->load->model('Country_model');
+            $status=$this->Country_model->editData($coID,$cName, $cCurrency);
+           if($status){
+            redirect('countryController/editSucessMsg');
+            }
+        else{
             redirect('countryController/editUnsucessMsg');
             }
-            // If form validation succeeds, save the data to the database
-            $data = array(
-                'co_name' => $this->input->post('couName'),
-                'co_currency' => $this->input->post('couCurrency')
-            );
-            $this->db->where('co_id', $coID);
-            $this->db->update('tbl_country', $data);
-            redirect('countryController/editSucessMsg');
     }
     }
     public function editSucessMsg(){
@@ -85,22 +76,18 @@ class countryController extends CI_Controller {
         echo "<script>alert('Updated Not Successfully! Country Name Already Exist');</script>";
         $this->load->view('countryIndex');
     }
+    
 
     //deleting
     public function delete($id){
-        $tempID=$id;
-        //checking if there is any ideas associated to this
-        $this->db->select();
-        $this->db->from('tbl_idea');
-        $this->db->where('co_id=',$tempID);
-        $query = $this->db->get();
-        if($query->result()!=null){
-        redirect('countryController/deleteUnsucessMsg');
-        }
-        //deleting the country
-        $this->db->where('co_id', $tempID);
-        $this->db->delete('tbl_country');
-        redirect('countryController/deleteSucessMsg');
+        $this->load->model('Country_model');
+        $status=$this->Country_model->deleteData($id);
+        if($status){
+            redirect('countryController/deleteSucessMsg');
+            }
+        else{
+            redirect('countryController/deleteUnsucessMsg');
+            }
     }
     public function deleteSucessMsg(){
         echo "<script>alert('deleted Successfully');</script>";

@@ -60,7 +60,6 @@ button {
     <div style="padding-top: 5%; padding-left: 20%; padding-right:0%; font-family: 'Open Sans', sans-serif;">
             <h2>Products Associated With This Category:<h2><h1>
                 <?php
-                $proID=$_SESSION['ideaID'];
                 $this->db->select();
                 $this->db->from('tbl_producttype');
                 $this->db->where('pro_id',$proID);

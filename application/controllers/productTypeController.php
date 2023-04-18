@@ -14,22 +14,20 @@ class productTypeController extends CI_Controller {
             // If form validation fails, show the form again with error messages
             $this->session->set_flashdata('error', 'Check Field Values');
         $this->load->view('addNewProductIndex');
-        } else {
-            //cheching the same product type exist in db
-            $this->db->select();
-            $this->db->from('tbl_producttype');
-            $this->db->where('pro_type',$this->input->post('proType'));
-            $query = $this->db->get();
-            if($query->result()!=null){
-            redirect('productTypeController/UnsucessMsg');
-            }
-            // If form validation succeeds, save the data to the database
+        } 
+        else {
             $data = array(
-                'pro_type' => $this->input->post('proType')
-            );
-            $this->db->insert('tbl_producttype', $data);
-            redirect('productTypeController/sucessMsg');
-    }
+            'pro_type' => $this->input->post('proType')
+             );
+             $this->load->model('ProductType_model');
+             $status=$this->ProductType_model->save_form_data($data);
+             if($status){
+                redirect('productTypeController/sucessMsg');
+                }
+            else{
+                redirect('productTypeController/UnsucessMsg');
+                }
+        }
     }
     public function sucessMsg(){
         echo "<script>alert('Added Successfully');</script>";
@@ -40,12 +38,16 @@ class productTypeController extends CI_Controller {
         $this->load->view('productIndex');
     }
     public function viewIdeas($id){
-        $_SESSION['ideaID']=$id;
-        $this->load->view('viewIdeasAsso');
+        $data= array(
+            'proID' => $id
+        );
+        $this->load->view('viewIdeasAsso',$data);
     }
     public function edit($id){
-        $_SESSION['proID']=$id;
-        $this->load->view('editNewProductIndex');
+        $data= array(
+            'temp' => $id
+        );
+        $this->load->view('editNewProductIndex',$data);
     }
     public function edit_form_data(){
         $this->load->library('form_validation');
@@ -56,22 +58,18 @@ class productTypeController extends CI_Controller {
             $this->session->set_flashdata('error', 'Check Field Values');
         $this->load->view('editNewProductIndex');
         } else {
-            $proID=$this->input->post('id');
-            //checking if there is a same product type exist in db
-            $this->db->select();
-            $this->db->from('tbl_producttype');
-            $this->db->where('pro_id!=',$proID)->where('pro_type',$this->input->post('proType'));
-            $query = $this->db->get();
-            if($query->result()!=null){
-            redirect('productTypeController/editUnsucessMsg');
-            }
-            // If form validation succeeds, save the data to the database
             $data = array(
+                'pro_id' => $this->input->post('id'),
                 'pro_type' => $this->input->post('proType')
             );
-            $this->db->where('pro_id', $proID);
-            $this->db->update('tbl_producttype', $data);
-            redirect('productTypeController/editSucessMsg');
+            $this->load->model('ProductType_model');
+             $status=$this->ProductType_model->edit_form_data($data);
+             if($status){
+                redirect('productTypeController/editSucessMsg');
+                }
+            else{
+                redirect('productTypeController/editUnsucessMsg');
+                }
     }
     }
     public function editSucessMsg(){
@@ -83,19 +81,14 @@ class productTypeController extends CI_Controller {
         $this->load->view('productIndex');
     }
     public function delete($id){
-        $tempID=$id;
-        //checking if there is any ideas associated to this
-        $this->db->select();
-        $this->db->from('tbl_idea');
-        $this->db->where('pro_id=',$tempID);
-        $query = $this->db->get();
-        if($query->result()!=null){
-        redirect('productTypeController/deleteUnsucessMsg');
-        }
-        //deleting the pro type
-        $this->db->where('pro_id', $tempID);
-        $this->db->delete('tbl_producttype');
-        redirect('productTypeController/deleteSucessMsg');
+        $this->load->model('ProductType_model');
+        $status=$this->ProductType_model->delete($id);
+        if($status){
+           redirect('productTypeController/deleteSucessMsg');
+           }
+       else{
+           redirect('productTypeController/deleteUnsucessMsg');
+           }
     }
     public function deleteSucessMsg(){
         echo "<script>alert('deleted Successfully');</script>";

@@ -58,7 +58,6 @@ include("header.php");
         <form action="<?php echo site_url('productTypeController/edit_form_data'); ?>" method="post">
             <label for="category">Category</label>
             <?php
-            $temp=$_SESSION['proID'];
             try{
                 $this->db->select();
                 $this->db->from('tbl_producttype');

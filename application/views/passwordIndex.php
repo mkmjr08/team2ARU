@@ -42,9 +42,34 @@ include("header.php");
             <?php  if ($this->session->flashdata('error2')) { ?>
                 <div ><?php echo $this->session->flashdata('error2'); ?></div>
             <?php } ?>
-            <input type="submit" value="Change Password" name="changePWD">
+            <div id="password-mismatch" style="color: red; display: none;">Passwords do not match</div>
+            <div id="password-match" style="color: green; display: none;">Passwords match</div>
+             <input type="submit" value="Change Password" name="changePWD">
         </form>
         </div>
     </div>
 </body>
 </html>
+<script>
+  const newPasswordInput = document.getElementById("newPassword");
+  const reEnteredPasswordInput = document.getElementById("reNewPassword");
+  const passwordMismatchDiv = document.getElementById("password-mismatch");
+  const passwordMatchDiv = document.getElementById("password-match");
+  reEnteredPasswordInput.addEventListener("input", checkPasswords);
+
+  function checkPasswords() {
+    const newPassword = newPasswordInput.value;
+    const reEnteredPassword = reEnteredPasswordInput.value;
+
+    if (newPassword === reEnteredPassword) {
+      // Passwords match
+      passwordMismatchDiv.style.display = "none";
+      passwordMatchDiv.style.display = "block";
+    } else {
+      // Passwords do not match
+      passwordMismatchDiv.style.display = "block";
+      passwordMatchDiv.style.display = "none";
+    }
+  }
+</script>
+

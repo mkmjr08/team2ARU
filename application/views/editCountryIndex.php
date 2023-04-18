@@ -58,7 +58,7 @@ include("header.php");
         <form action="<?php echo site_url('countryController/edit_form_data'); ?>" method="post">
             <label for="category">Category</label>
             <?php
-            $temp=$_SESSION['counID'];
+            $temp=$id;
             try{
                 $this->db->select();
                 $this->db->from('tbl_country');
